@@ -18,6 +18,7 @@ use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Tables\Columns\BooleanColumn;
+use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PostResource\Pages;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
@@ -51,10 +52,12 @@ class PostResource extends Resource
                                 'category',
                                 'name'
                             )->required(),
-
                         MultiSelect::make('tag_id')
-                            ->relationship('tags', 'name')->required(),
-                        RichEditor::make('description')->required(),
+                            ->relationship('tags', 'name')->required()
+                    ])->columns(3),
+                Card::make()
+                    ->schema([
+                        MarkdownEditor::make('description')->required(),
                     ])
             ]);
     }
@@ -76,8 +79,8 @@ class PostResource extends Resource
             ->filters([
                 Filter::make('Publicado')
                     ->query(fn (Builder $query): Builder => $query->where('is_published', true)),
-            Filter::make('Não Publicado')
-                ->query(fn (Builder $query): Builder => $query->where('is_published', false))
+                Filter::make('Não Publicado')
+                    ->query(fn (Builder $query): Builder => $query->where('is_published', false))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
