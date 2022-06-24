@@ -10,10 +10,12 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Tables\Columns\BooleanColumn;
 use App\Filament\Resources\PostResource\Pages;
@@ -61,18 +63,21 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('image')->collection('posts'),
-                TextColumn::make('title')->sortable(),
+                SpatieMediaLibraryImageColumn::make('imagem')->collection('posts'),
+                TextColumn::make('title')->sortable()->searchable(),
                 TextColumn::make('slug')->sortable(),
-                TextColumn::make('category.name')->sortable(),
-                TextColumn::make('tags.name')->sortable(),
+                TextColumn::make('category.name')->sortable()->searchable(),
+                TextColumn::make('tags.name')->sortable()->searchable(),
                 BooleanColumn::make('is_published')
                     ->trueIcon('heroicon-o-badge-check')
                     ->falseIcon('heroicon-o-x-circle')
                     ->sortable()
             ])
             ->filters([
-                //
+                Filter::make('Publicado')
+                    ->query(fn (Builder $query): Builder => $query->where('is_published', true)),
+            Filter::make('Não Publicado')
+                ->query(fn (Builder $query): Builder => $query->where('is_published', false))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
