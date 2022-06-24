@@ -3,7 +3,7 @@
 
 ### Pacotes Instalados:
 
-    [Filamentphp]: [http://nodebr.org/](https://filamentphp.com/)
+    - Filamentphp
     
 ### Imagens:
 
