@@ -5,6 +5,8 @@
 
     - Filamentphp
     
+    - Laravel-medialibrary
+    
 ### Imagens:
 
 ![Dashboard](https://github.com/DCO20/blog/blob/main/dashboard01.png)
