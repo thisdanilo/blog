@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Category;
 use Closure;
 use App\Models\Tag;
 use Filament\Tables;
@@ -18,7 +19,7 @@ class TagResource extends Resource
 {
     protected static ?string $model = Tag::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {
@@ -30,8 +31,8 @@ class TagResource extends Resource
                             ->reactive()
                             ->afterStateUpdated(function (Closure $set, $state) {
                                 $set('slug', Str::slug($state));
-                            })->required(),
-                        TextInput::make('slug')->required()
+                            })->required()->label('nome'),
+                        TextInput::make('slug')->required()->unique(table: Tag::class)
                     ])
                     ->columns(2)
             ]);
@@ -41,7 +42,7 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('name')->sortable()->searchable()->label('Nome'),
                 TextColumn::make('slug')->sortable()
             ])
             ->filters([

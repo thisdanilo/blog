@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Category;
 use Closure;
 use App\Models\Post;
 use Filament\Tables;
@@ -14,7 +15,6 @@ use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MultiSelect;
 use Filament\Tables\Columns\BooleanColumn;
@@ -28,7 +28,9 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+
+    protected static ?string $navigationLabel = 'Postagens';
 
     public static function form(Form $form): Form
     {
@@ -36,28 +38,28 @@ class PostResource extends Resource
             ->schema([
                 Card::make()
                     ->schema([
-                        SpatieMediaLibraryFileUpload::make('image')->collection('posts'),
+                        SpatieMediaLibraryFileUpload::make('image')->collection('posts')->label('Imagem'),
                         TextInput::make('title')
                             ->reactive()
                             ->afterStateUpdated(function (Closure $set, $state) {
                                 $set('slug', Str::slug($state));
-                            })->required(),
-                        TextInput::make('slug')->required(),
+                            })->required()->label('Título'),
+                        TextInput::make('slug')->required()->unique(table: Post::class),
                         Toggle::make('is_published')
                             ->onIcon('heroicon-s-lightning-bolt')
                             ->offIcon('heroicon-s-user')
-                            ->required(),
+                            ->required()->label('Publicado'),
                         BelongsToSelect::make('category_id')
                             ->relationship(
                                 'category',
                                 'name'
-                            )->required(),
+                            )->required()->label('Categoria'),
                         MultiSelect::make('tag_id')
                             ->relationship('tags', 'name')->required()
                     ])->columns(3),
                 Card::make()
                     ->schema([
-                        MarkdownEditor::make('description')->required(),
+                        MarkdownEditor::make('description')->required()->label('Descrição'),
                     ])
             ]);
     }
@@ -66,15 +68,16 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('imagem')->collection('posts'),
-                TextColumn::make('title')->sortable()->searchable(),
+                SpatieMediaLibraryImageColumn::make('imagem')->collection('posts')->label('Imagem'),
+                TextColumn::make('title')->sortable()->searchable()->label('Título'),
                 TextColumn::make('slug')->sortable(),
-                TextColumn::make('category.name')->sortable()->searchable(),
+                TextColumn::make('category.name')->sortable()->searchable()->label('Categoria'),
                 TextColumn::make('tags.name')->sortable()->searchable(),
                 BooleanColumn::make('is_published')
                     ->trueIcon('heroicon-o-badge-check')
                     ->falseIcon('heroicon-o-x-circle')
                     ->sortable()
+                    ->label('Publicado')
             ])
             ->filters([
                 Filter::make('Publicado')
