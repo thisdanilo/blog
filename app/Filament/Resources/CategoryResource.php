@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use Closure;
-use Filament\Tables;
-use App\Models\Category;
-use Illuminate\Support\Str;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\CategoryResource\Pages;
-use Filament\Navigation\NavigationItem;
+use App\Models\Category;
+use Closure;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -34,9 +33,9 @@ class CategoryResource extends Resource
                             ->afterStateUpdated(function (Closure $set, $state) {
                                 $set('slug', Str::slug($state));
                             })->required()->label('Nome'),
-                        TextInput::make('slug')->required()->unique(table: Category::class)
+                        TextInput::make('slug')->required()->unique(table: Category::class),
                     ])
-                    ->columns(2)
+                    ->columns(2),
             ]);
     }
 
@@ -45,7 +44,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->sortable()->searchable()->label('Nome'),
-                TextColumn::make('slug')->sortable()
+                TextColumn::make('slug')->sortable(),
             ])
             ->filters([
                 //

@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Post extends Model implements HasMedia
 {
-    use HasFactory,
-        SoftDeletes,
-        InteractsWithMedia;
+    use HasFactory;
+    use SoftDeletes;
+    use InteractsWithMedia;
 
     /**
      * Tabela do banco de dados
      *
-     * @var string $table
+     * @var string
      */
     protected $table = 'posts';
 
@@ -31,7 +31,7 @@ class Post extends Model implements HasMedia
         'title',
         'slug',
         'description',
-        'is_published'
+        'is_published',
     ];
 
     /**
@@ -40,30 +40,30 @@ class Post extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'is_published' => 'boolean'
+        'is_published' => 'boolean',
     ];
 
     /**
      * Atributos da tabela do banco de dados
      *
-     *  @var array $dates
+     *  @var array
      */
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /*
-	|--------------------------------------------------------------------------
-	| Relationship
-	|--------------------------------------------------------------------------
-	|
-	| Definição dos métodos das entidades relacionadas.
-	| Estes métodos são responsáveis pelas relações e permitem acessar
-	| os atributos Eloquent obtidas das mesmas.
-	|
-	*/
+    |--------------------------------------------------------------------------
+    | Relationship
+    |--------------------------------------------------------------------------
+    |
+    | Definição dos métodos das entidades relacionadas.
+    | Estes métodos são responsáveis pelas relações e permitem acessar
+    | os atributos Eloquent obtidas das mesmas.
+    |
+    */
 
     /**
      * Obtém a tag

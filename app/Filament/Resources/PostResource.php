@@ -2,27 +2,26 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Category;
-use Closure;
-use App\Models\Post;
-use Filament\Tables;
-use Illuminate\Support\Str;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
-use Filament\Tables\Filters\Filter;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\MultiSelect;
-use Filament\Tables\Columns\BooleanColumn;
-use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PostResource\Pages;
+use App\Models\Post;
+use Closure;
 use Filament\Forms\Components\BelongsToSelect;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
@@ -55,12 +54,12 @@ class PostResource extends Resource
                                 'name'
                             )->required()->label('Categoria'),
                         MultiSelect::make('tag_id')
-                            ->relationship('tags', 'name')->required()
+                            ->relationship('tags', 'name')->required(),
                     ])->columns(3),
                 Card::make()
                     ->schema([
                         MarkdownEditor::make('description')->required()->label('Descrição'),
-                    ])
+                    ]),
             ]);
     }
 
@@ -77,13 +76,13 @@ class PostResource extends Resource
                     ->trueIcon('heroicon-o-badge-check')
                     ->falseIcon('heroicon-o-x-circle')
                     ->sortable()
-                    ->label('Publicado')
+                    ->label('Publicado'),
             ])
             ->filters([
                 Filter::make('Publicado')
                     ->query(fn (Builder $query): Builder => $query->where('is_published', true)),
                 Filter::make('Não Publicado')
-                    ->query(fn (Builder $query): Builder => $query->where('is_published', false))
+                    ->query(fn (Builder $query): Builder => $query->where('is_published', false)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

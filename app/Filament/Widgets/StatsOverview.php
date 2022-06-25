@@ -2,11 +2,11 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Tag;
-use App\Models\Post;
 use App\Models\Category;
-use Filament\Widgets\StatsOverviewWidget\Card;
+use App\Models\Post;
+use App\Models\Tag;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Card;
 
 class StatsOverview extends BaseWidget
 {

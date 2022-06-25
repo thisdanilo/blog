@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory,
-        SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     /**
      * Tabela do banco de dados
      *
-     * @var string $table
+     * @var string
      */
     protected $table = 'categories';
 
@@ -25,30 +25,30 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
     ];
 
     /**
      * Atributos da tabela do banco de dados
      *
-     *  @var array $dates
+     *  @var array
      */
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /*
-	|--------------------------------------------------------------------------
-	| Relationship
-	|--------------------------------------------------------------------------
-	|
-	| Definição dos métodos das entidades relacionadas.
-	| Estes métodos são responsáveis pelas relações e permitem acessar
-	| os atributos Eloquent obtidas das mesmas.
-	|
-	*/
+    |--------------------------------------------------------------------------
+    | Relationship
+    |--------------------------------------------------------------------------
+    |
+    | Definição dos métodos das entidades relacionadas.
+    | Estes métodos são responsáveis pelas relações e permitem acessar
+    | os atributos Eloquent obtidas das mesmas.
+    |
+    */
 
     /**
      * Obtêm as postagens
